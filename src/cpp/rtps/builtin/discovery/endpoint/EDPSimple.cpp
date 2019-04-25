@@ -436,7 +436,13 @@ bool EDPSimple::createSEDPEndpoints()
     publications_listener_ = new EDPSimplePUBListener(this);
     subscriptions_listener_ = new EDPSimpleSUBListener(this);
 
-    if (m_discovery.discovery_config.m_simpleEDP.use_PublicationWriterANDSubscriptionReader)
+    std::vector<std::string> names= this->mp_PDP->getRTPSParticipant()->getParticipantNames();
+    std::string this_name = names.front();
+
+    //if (m_discovery.discovery_config.m_simpleEDP.use_PublicationWriterANDSubscriptionReader)
+    // These first pair of builtin endpoints is required only for nodes that publish data
+    // "arequipa" node does not publish
+    if(this_name != "arequipa")
     {
         publications_writer_.second = new WriterHistory(writer_history_att);
         created &= this->mp_RTPSParticipant->createWriter(&waux, watt, publications_writer_.second,
@@ -468,7 +474,10 @@ bool EDPSimple::createSEDPEndpoints()
             subscriptions_reader_.second = nullptr;
         }
     }
-    if (m_discovery.discovery_config.m_simpleEDP.use_PublicationReaderANDSubscriptionWriter)
+    //if(m_discovery.m_simpleEDP.use_PublicationReaderANDSubscriptionWriter)
+    // These second pair of builtin endpoints is required only for nodes that subscribe to data
+    // "montreal" node does not subscribe
+    if(this_name != "montreal")
     {
         publications_reader_.second = new ReaderHistory(reader_history_att);
         created &= this->mp_RTPSParticipant->createReader(&raux, ratt, publications_reader_.second,
@@ -842,6 +851,52 @@ void EDPSimple::assignRemoteEndpoints(
     bool use_multicast_locators = !mp_PDP->getRTPSParticipant()->getAttributes().builtin.avoid_builtin_multicast ||
             pdata.metatraffic_locators.unicast.empty();
     auxendp &= DISC_BUILTIN_ENDPOINT_PUBLICATION_ANNOUNCER;
+
+    std::vector<std::string> names= this->mp_PDP->getRTPSParticipant()->getParticipantNames();
+
+    std::string this_name = names.front();
+    std::string that_name = static_cast<std::string>(pdata.m_participantName);
+
+    std::cout<<"ASSIGN REMOTE ENDPOINTS FROM: "<< that_name << " TO " << this_name <<std::endl;
+
+    std::set<std::pair<std::string, std::string>> allowlist;
+
+    // pairs of nodes that HAVE TO communicate with each other
+    // i.e. montreal publishes to TOPIC_A and lyon subscribes to TOPIC_A
+    allowlist.insert(std::make_pair("montreal", "lyon"));
+    allowlist.insert(std::make_pair("montreal", "hamburg"));
+    allowlist.insert(std::make_pair("montreal", "ponce"));
+    allowlist.insert(std::make_pair("montreal", "mandalay"));
+    allowlist.insert(std::make_pair("montreal", "geneva"));
+    allowlist.insert(std::make_pair("lyon", "hamburg"));
+    allowlist.insert(std::make_pair("hamburg", "osaka"));
+    allowlist.insert(std::make_pair("hamburg", "geneva"));
+    allowlist.insert(std::make_pair("osaka", "mandalay"));
+    allowlist.insert(std::make_pair("mandalay", "ponce"));
+    allowlist.insert(std::make_pair("ponce", "barcelona"));
+    allowlist.insert(std::make_pair("ponce", "geneva"));
+    allowlist.insert(std::make_pair("barcelona", "georgetown"));
+    allowlist.insert(std::make_pair("geneva", "arequipa"));
+    allowlist.insert(std::make_pair("georgetown", "ponce"));
+    allowlist.insert(std::make_pair("lyon", "hamburg"));
+
+    std::set<std::pair<std::string, std::string>> t_list;
+
+    // augment the list with inverse pairs
+    for (auto p : allowlist){
+        t_list.insert(std::make_pair(static_cast<std::string>(p.first),
+                                     static_cast<std::string>( p.second)));
+        t_list.insert(std::make_pair(static_cast<std::string>(p.second), static_cast<std::string>(p.first)));
+    }
+    allowlist = t_list;
+
+    if (allowlist.find(std::make_pair(this_name, that_name)) == allowlist.end()){
+        std::cout<<"DISCARDED EDP"<<std::endl;
+        return;
+    }
+
+    std::cout<<"APPROVED EDP"<<std::endl;
+
 
     std::lock_guard<std::mutex> data_guard(temp_data_lock_);
 

@@ -84,6 +84,59 @@ void EDPBasePUBListener::add_writer_from_change(
             return;
         }
 
+        std::vector<std::string> names= edp->mp_PDP->getRTPSParticipant()->getParticipantNames();
+        // std::vector<std::string> names= this->sedp_->mp_PDP->getRTPSParticipant()->getParticipantNames();
+
+        std::string this_name = names.front();
+        std::string topic_name = static_cast<std::string>(temp_writer_data_.topicName());
+
+        std::cout<<"PUB MESSAGE Activating: " << temp_writer_data_.guid().entityId << " in topic " << topic_name << std::endl;
+        std::cout<<"PARTICIPANT PROXY DATA: "<< this_name<<std::endl;
+
+        std::set<std::pair<std::string, std::string>> allowlist;
+
+        // this is the PUBLISHER listener
+        // create a list of pairs of nodes and topics they subscribe to
+        // e.g. lyon subscribes to amazon, so has to accept publishers related to amazon
+        // note that the ROS topic names are prepended with "rt/" by the DDS
+        allowlist.insert(std::make_pair("lyon", "rt/amazon"));
+        allowlist.insert(std::make_pair("hamburg", "rt/nile"));
+        allowlist.insert(std::make_pair("hamburg", "rt/tigris"));
+        allowlist.insert(std::make_pair("hamburg", "rt/ganges"));
+        allowlist.insert(std::make_pair("hamburg", "rt/danube"));
+        allowlist.insert(std::make_pair("osaka", "rt/parana"));
+        allowlist.insert(std::make_pair("mandalay", "rt/salween"));
+        allowlist.insert(std::make_pair("mandalay", "rt/danube"));
+        allowlist.insert(std::make_pair("ponce", "rt/missouri"));
+        allowlist.insert(std::make_pair("ponce", "rt/danube"));
+        allowlist.insert(std::make_pair("ponce", "rt/volga"));
+        allowlist.insert(std::make_pair("barcelona", "rt/mekong"));
+        allowlist.insert(std::make_pair("georgetown", "rt/lena"));
+        allowlist.insert(std::make_pair("geneva", "rt/congo"));
+        allowlist.insert(std::make_pair("geneva", "rt/danube"));
+        allowlist.insert(std::make_pair("geneva", "rt/parana"));
+        allowlist.insert(std::make_pair("arequipa", "rt/arkansas"));
+
+        std::set<std::pair<std::string, std::string>> t_list;
+
+        // augment the list with additional topics for intraprocess
+        // NOTE: if you only have intraprocess communication,
+        // you could directly use only the "/_intra" topics
+        for (auto p : allowlist){
+            t_list.insert(std::make_pair(p.first, p.second));
+            std::string intra_name = std::string(p.second) + std::string("/_intra");
+            t_list.insert(std::make_pair(p.first, intra_name));
+        }
+
+        allowlist = t_list;
+
+        if (allowlist.find(std::make_pair(this_name, topic_name)) == allowlist.end()){
+            std::cout<<"DISCARDED topic"<<std::endl;
+            return;
+        }
+
+        std::cout<<"APPROVED topic"<<std::endl;
+
         //LOAD INFORMATION IN DESTINATION WRITER PROXY DATA
         auto copy_data_fun = [this, &network](
             WriterProxyData* data,
@@ -204,6 +257,55 @@ void EDPBaseSUBListener::add_reader_from_change(
             logInfo(RTPS_EDP, "From own RTPSParticipant, ignoring");
             return;
         }
+
+        // std::vector<std::string> names= this->sedp_->mp_PDP->getRTPSParticipant()->getParticipantNames();
+        std::vector<std::string> names = edp->mp_RTPSParticipant->getParticipantNames();
+
+        std::string this_name = names.front();
+        std::string topic_name = static_cast<std::string>(temp_reader_data_.topicName());
+
+        std::cout<<"SUB MESSAGE Activating: " << temp_reader_data_.guid().entityId << " in topic " << topic_name << std::endl;
+        std::cout<<"PARTICIPANT PROXY DATA: "<< this_name<<std::endl;
+
+        std::set<std::pair<std::string, std::string>> allowlist;
+
+        // this is the SUBSCRIBER listener
+        // create a list of pairs of nodes and topics they publish to
+        // e.g. montreal publishes to amazon, so has to accept subscribers related to amazon
+        // note that the ROS topic names are prepended with "rt/" by the DDS
+        allowlist.insert(std::make_pair("montreal", "rt/amazon"));
+        allowlist.insert(std::make_pair("montreal", "rt/nile"));
+        allowlist.insert(std::make_pair("montreal", "rt/ganges"));
+        allowlist.insert(std::make_pair("montreal", "rt/danube"));
+        allowlist.insert(std::make_pair("lyon", "rt/tigris"));
+        allowlist.insert(std::make_pair("hamburg", "rt/parana"));
+        allowlist.insert(std::make_pair("osaka", "rt/salween"));
+        allowlist.insert(std::make_pair("mandalay", "rt/missouri"));
+        allowlist.insert(std::make_pair("ponce", "rt/mekong"));
+        allowlist.insert(std::make_pair("ponce", "rt/congo"));
+        allowlist.insert(std::make_pair("barcelona", "rt/lena"));
+        allowlist.insert(std::make_pair("georgetown", "rt/volga"));
+        allowlist.insert(std::make_pair("geneva", "rt/arkansas"));
+
+        std::set<std::pair<std::string, std::string>> t_list;
+
+        // augment the list with additional topics for intraprocess
+        // NOTE: if you only have intraprocess communication,
+        // you could directly use only the "/_intra" topics
+        for (auto p : allowlist){
+            t_list.insert(std::make_pair(p.first, p.second));
+            std::string intra_name = std::string(p.second) + std::string("/_intra");
+            t_list.insert(std::make_pair(p.first, intra_name));
+        }
+
+        allowlist = t_list;
+
+        if (allowlist.find(std::make_pair(this_name, topic_name)) == allowlist.end()){
+            std::cout<<"DISCARDED topic"<<std::endl;
+            return;
+        }
+
+        std::cout<<"APPROVED topic"<<std::endl;
 
         auto copy_data_fun = [this, &network](
             ReaderProxyData* data,
