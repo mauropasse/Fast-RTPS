@@ -467,11 +467,22 @@ void ThroughputPublisher::run(
     command.m_command = ALL_STOPS;
     command_publisher_->write((void*)&command);
     bool all_acked = command_publisher_->wait_for_all_acked(eprosima::fastrtps::Time_t(20, 0));
+    print_results(results_);
+
     if (!all_acked)
     {
-        std::cout << "Not all acked!" << std::endl;
+        std::cout << "ALL_STOPS Not acked! in 20(s)" << std::endl;
     }
-    print_results(results_);
+    else
+    {
+        // Wait for the subscriber unmatch.
+        std::unique_lock<std::mutex> disc_lock(command_mutex_);
+        command_discovery_cv_.wait(disc_lock, [&]()
+            {
+                return command_discovery_count_ == 0;
+            });
+        disc_lock.unlock();
+    }
 }
 
 bool ThroughputPublisher::test(
