@@ -33,12 +33,15 @@ namespace eprosima {
 namespace fastrtps {
 namespace rtps {
 
+template <typename T>
+struct map_node_size : std::integral_constant<std::size_t, 48> {};
+
 constexpr size_t guid_map_node_size =
-    foonathan::memory::map_node_size<std::pair<size_t, std::pair<GUID_t, GUID_t>>>::value;
+    map_node_size<std::pair<size_t, std::pair<GUID_t, GUID_t>>>::value;
 constexpr size_t guid_count_node_size =
-    foonathan::memory::map_node_size<std::pair<size_t, std::pair<GUID_t, uint16_t>>>::value;
+    map_node_size<std::pair<size_t, std::pair<GUID_t, uint16_t>>>::value;
 constexpr size_t history_record_node_size =
-    foonathan::memory::map_node_size<std::pair<size_t, std::pair<GUID_t, SequenceNumber_t>>>::value;
+    map_node_size<std::pair<size_t, std::pair<GUID_t, SequenceNumber_t>>>::value;
 
 /**
  * Class RTPSReader, manages the reception of data from its matched writers.
