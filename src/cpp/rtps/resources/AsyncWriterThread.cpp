@@ -98,6 +98,10 @@ void AsyncWriterThread::wake_up(
             {
                 running_ = true;
                 thread_ = new std::thread(&AsyncWriterThread::run, this);
+                pthread_setname_np(thread_->native_handle(), "Listener");
+                sched_param param;
+                param.sched_priority = 2;
+                pthread_setschedparam(thread_->native_handle(), SCHED_FIFO, &param);
             }
             else
             {
