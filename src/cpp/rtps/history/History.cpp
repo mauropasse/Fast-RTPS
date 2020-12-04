@@ -39,7 +39,7 @@ History::History(
     , mp_mutex(nullptr)
 
 {
-    m_changes.reserve((uint32_t)abs(att.initialReservedCaches));
+    // m_changes.reserve((uint32_t)abs(att.initialReservedCaches));
 }
 
 History::~History()

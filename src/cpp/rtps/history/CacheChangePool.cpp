@@ -74,18 +74,22 @@ CacheChangePool::CacheChangePool(
     switch (memoryMode)
     {
         case PREALLOCATED_MEMORY_MODE:
+            std::cout << "PREALLOCATED_MEMORY_MODE" << std::endl;
             logInfo(RTPS_UTILS, "Static Mode is active, preallocating memory for pool_size elements");
             allocateGroup(pool_size);
             break;
         case PREALLOCATED_WITH_REALLOC_MEMORY_MODE:
+            std::cout << "PREALLOCATED_WITH_REALLOC_MEMORY_MODE" << std::endl;
             logInfo(RTPS_UTILS,
                     "Semi-Static Mode is active, preallocating memory for pool_size. Size of the cachechanges can be increased");
             allocateGroup(pool_size);
             break;
         case DYNAMIC_RESERVE_MEMORY_MODE:
+            std::cout << "DYNAMIC_RESERVE_MEMORY_MODE" << std::endl;
             logInfo(RTPS_UTILS, "Dynamic Mode is active, CacheChanges are allocated on request");
             break;
         case DYNAMIC_REUSABLE_MEMORY_MODE:
+            std::cout << "DYNAMIC_REUSABLE_MEMORY_MODE" << std::endl;
             logInfo(RTPS_UTILS,
                     "Semi-Dynamic Mode is active, no preallocation but dynamically allocated CacheChanges are reused for future cachechanges");
             break;

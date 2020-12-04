@@ -55,7 +55,7 @@ class RTPS_DllAPI HistoryAttributes
 
         //! Default constructor
         HistoryAttributes()
-            : memoryPolicy(PREALLOCATED_MEMORY_MODE)
+            : memoryPolicy(DYNAMIC_RESERVE_MEMORY_MODE)
             , payloadMaxSize(500)
             , initialReservedCaches(500)
             , maximumReservedCaches(0)

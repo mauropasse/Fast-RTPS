@@ -38,101 +38,101 @@ using namespace eprosima::fastrtps::rtps;
 
 void register_builtin_annotations_types(TypeObjectFactory* factory)
 {
-    factory->add_type_object("id", GetidIdentifier(true), GetidObject(true));
-    factory->add_type_object("id", GetidIdentifier(false), GetidObject(false));
+    // factory->add_type_object("id", GetidIdentifier(true), GetidObject(true));
+    // factory->add_type_object("id", GetidIdentifier(false), GetidObject(false));
 
-    factory->add_type_object("autoid", GetautoidIdentifier(true), GetautoidObject(true));
-    factory->add_type_object("autoid", GetautoidIdentifier(false), GetautoidObject(false));
-    {
-        using namespace autoid;
+    // factory->add_type_object("autoid", GetautoidIdentifier(true), GetautoidObject(true));
+    // factory->add_type_object("autoid", GetautoidIdentifier(false), GetautoidObject(false));
+    // {
+    //     using namespace autoid;
 
-        factory->add_type_object("AutoidKind", GetAutoidKindIdentifier(true), GetAutoidKindObject(true));
-        factory->add_type_object("AutoidKind", GetAutoidKindIdentifier(false), GetAutoidKindObject(false));
-
-
-    }
-    factory->add_type_object("optional", GetoptionalIdentifier(true), GetoptionalObject(true));
-    factory->add_type_object("optional", GetoptionalIdentifier(false), GetoptionalObject(false));
-
-    factory->add_type_object("position", GetpositionIdentifier(true), GetpositionObject(true));
-    factory->add_type_object("position", GetpositionIdentifier(false), GetpositionObject(false));
-
-    factory->add_type_object("value", GetvalueIdentifier(true), GetvalueObject(true));
-    factory->add_type_object("value", GetvalueIdentifier(false), GetvalueObject(false));
-
-    factory->add_type_object("extensibility", GetextensibilityIdentifier(true), GetextensibilityObject(true));
-    factory->add_type_object("extensibility", GetextensibilityIdentifier(false), GetextensibilityObject(false));
-    {
-        using namespace extensibility;
-
-        factory->add_type_object("ExtensibilityKind", GetExtensibilityKindIdentifier(true), GetExtensibilityKindObject(true));
-        factory->add_type_object("ExtensibilityKind", GetExtensibilityKindIdentifier(false), GetExtensibilityKindObject(false));
+    //     factory->add_type_object("AutoidKind", GetAutoidKindIdentifier(true), GetAutoidKindObject(true));
+    //     factory->add_type_object("AutoidKind", GetAutoidKindIdentifier(false), GetAutoidKindObject(false));
 
 
-    }
-    factory->add_type_object("final", GetfinalIdentifier(true), GetfinalObject(true));
-    factory->add_type_object("final", GetfinalIdentifier(false), GetfinalObject(false));
+    // }
+    // factory->add_type_object("optional", GetoptionalIdentifier(true), GetoptionalObject(true));
+    // factory->add_type_object("optional", GetoptionalIdentifier(false), GetoptionalObject(false));
 
-    factory->add_type_object("appendable", GetappendableIdentifier(true), GetappendableObject(true));
-    factory->add_type_object("appendable", GetappendableIdentifier(false), GetappendableObject(false));
+    // factory->add_type_object("position", GetpositionIdentifier(true), GetpositionObject(true));
+    // factory->add_type_object("position", GetpositionIdentifier(false), GetpositionObject(false));
 
-    factory->add_type_object("mutable", GetmutableIdentifier(true), GetmutableObject(true));
-    factory->add_type_object("mutable", GetmutableIdentifier(false), GetmutableObject(false));
+    // factory->add_type_object("value", GetvalueIdentifier(true), GetvalueObject(true));
+    // factory->add_type_object("value", GetvalueIdentifier(false), GetvalueObject(false));
 
-    factory->add_type_object("key", GetkeyIdentifier(true), GetkeyObject(true));
-    factory->add_type_object("key", GetkeyIdentifier(false), GetkeyObject(false));
+    // factory->add_type_object("extensibility", GetextensibilityIdentifier(true), GetextensibilityObject(true));
+    // factory->add_type_object("extensibility", GetextensibilityIdentifier(false), GetextensibilityObject(false));
+    // {
+    //     using namespace extensibility;
 
-    factory->add_type_object("must_understand", Getmust_understandIdentifier(true), Getmust_understandObject(true));
-    factory->add_type_object("must_understand", Getmust_understandIdentifier(false), Getmust_understandObject(false));
-
-    factory->add_type_object("default_literal", Getdefault_literalIdentifier(true), Getdefault_literalObject(true));
-    factory->add_type_object("default_literal", Getdefault_literalIdentifier(false), Getdefault_literalObject(false));
-
-    factory->add_type_object("default", GetdefaultIdentifier(true), GetdefaultObject(true));
-    factory->add_type_object("default", GetdefaultIdentifier(false), GetdefaultObject(false));
-
-    factory->add_type_object("range", GetrangeIdentifier(true), GetrangeObject(true));
-    factory->add_type_object("range", GetrangeIdentifier(false), GetrangeObject(false));
-
-    factory->add_type_object("min", GetminIdentifier(true), GetminObject(true));
-    factory->add_type_object("min", GetminIdentifier(false), GetminObject(false));
-
-    factory->add_type_object("max", GetmaxIdentifier(true), GetmaxObject(true));
-    factory->add_type_object("max", GetmaxIdentifier(false), GetmaxObject(false));
-
-    factory->add_type_object("unit", GetunitIdentifier(true), GetunitObject(true));
-    factory->add_type_object("unit", GetunitIdentifier(false), GetunitObject(false));
-
-    factory->add_type_object("bit_bound", Getbit_boundIdentifier(true), Getbit_boundObject(true));
-    factory->add_type_object("bit_bound", Getbit_boundIdentifier(false), Getbit_boundObject(false));
-
-    factory->add_type_object("external", GetexternalIdentifier(true), GetexternalObject(true));
-    factory->add_type_object("external", GetexternalIdentifier(false), GetexternalObject(false));
-
-    factory->add_type_object("nested", GetnestedIdentifier(true), GetnestedObject(true));
-    factory->add_type_object("nested", GetnestedIdentifier(false), GetnestedObject(false));
-
-    factory->add_type_object("verbatim", GetverbatimIdentifier(true), GetverbatimObject(true));
-    factory->add_type_object("verbatim", GetverbatimIdentifier(false), GetverbatimObject(false));
-    {
-        using namespace verbatim;
-
-        factory->add_type_object("PlacementKind", GetPlacementKindIdentifier(true), GetPlacementKindObject(true));
-        factory->add_type_object("PlacementKind", GetPlacementKindIdentifier(false), GetPlacementKindObject(false));
+    //     factory->add_type_object("ExtensibilityKind", GetExtensibilityKindIdentifier(true), GetExtensibilityKindObject(true));
+    //     factory->add_type_object("ExtensibilityKind", GetExtensibilityKindIdentifier(false), GetExtensibilityKindObject(false));
 
 
-    }
-    factory->add_type_object("service", GetserviceIdentifier(true), GetserviceObject(true));
-    factory->add_type_object("service", GetserviceIdentifier(false), GetserviceObject(false));
+    // }
+    // factory->add_type_object("final", GetfinalIdentifier(true), GetfinalObject(true));
+    // factory->add_type_object("final", GetfinalIdentifier(false), GetfinalObject(false));
 
-    factory->add_type_object("oneway", GetonewayIdentifier(true), GetonewayObject(true));
-    factory->add_type_object("oneway", GetonewayIdentifier(false), GetonewayObject(false));
+    // factory->add_type_object("appendable", GetappendableIdentifier(true), GetappendableObject(true));
+    // factory->add_type_object("appendable", GetappendableIdentifier(false), GetappendableObject(false));
 
-    factory->add_type_object("ami", GetamiIdentifier(true), GetamiObject(true));
-    factory->add_type_object("ami", GetamiIdentifier(false), GetamiObject(false));
+    // factory->add_type_object("mutable", GetmutableIdentifier(true), GetmutableObject(true));
+    // factory->add_type_object("mutable", GetmutableIdentifier(false), GetmutableObject(false));
 
-    factory->add_type_object("non_serialized", Getnon_serializedIdentifier(true), Getnon_serializedObject(true));
-    factory->add_type_object("non_serialized", Getnon_serializedIdentifier(false), Getnon_serializedObject(false));
+    // factory->add_type_object("key", GetkeyIdentifier(true), GetkeyObject(true));
+    // factory->add_type_object("key", GetkeyIdentifier(false), GetkeyObject(false));
+
+    // factory->add_type_object("must_understand", Getmust_understandIdentifier(true), Getmust_understandObject(true));
+    // factory->add_type_object("must_understand", Getmust_understandIdentifier(false), Getmust_understandObject(false));
+
+    // factory->add_type_object("default_literal", Getdefault_literalIdentifier(true), Getdefault_literalObject(true));
+    // factory->add_type_object("default_literal", Getdefault_literalIdentifier(false), Getdefault_literalObject(false));
+
+    // factory->add_type_object("default", GetdefaultIdentifier(true), GetdefaultObject(true));
+    // factory->add_type_object("default", GetdefaultIdentifier(false), GetdefaultObject(false));
+
+    // factory->add_type_object("range", GetrangeIdentifier(true), GetrangeObject(true));
+    // factory->add_type_object("range", GetrangeIdentifier(false), GetrangeObject(false));
+
+    // factory->add_type_object("min", GetminIdentifier(true), GetminObject(true));
+    // factory->add_type_object("min", GetminIdentifier(false), GetminObject(false));
+
+    // factory->add_type_object("max", GetmaxIdentifier(true), GetmaxObject(true));
+    // factory->add_type_object("max", GetmaxIdentifier(false), GetmaxObject(false));
+
+    // factory->add_type_object("unit", GetunitIdentifier(true), GetunitObject(true));
+    // factory->add_type_object("unit", GetunitIdentifier(false), GetunitObject(false));
+
+    // factory->add_type_object("bit_bound", Getbit_boundIdentifier(true), Getbit_boundObject(true));
+    // factory->add_type_object("bit_bound", Getbit_boundIdentifier(false), Getbit_boundObject(false));
+
+    // factory->add_type_object("external", GetexternalIdentifier(true), GetexternalObject(true));
+    // factory->add_type_object("external", GetexternalIdentifier(false), GetexternalObject(false));
+
+    // factory->add_type_object("nested", GetnestedIdentifier(true), GetnestedObject(true));
+    // factory->add_type_object("nested", GetnestedIdentifier(false), GetnestedObject(false));
+
+    // factory->add_type_object("verbatim", GetverbatimIdentifier(true), GetverbatimObject(true));
+    // factory->add_type_object("verbatim", GetverbatimIdentifier(false), GetverbatimObject(false));
+    // {
+    //     using namespace verbatim;
+
+    //     factory->add_type_object("PlacementKind", GetPlacementKindIdentifier(true), GetPlacementKindObject(true));
+    //     factory->add_type_object("PlacementKind", GetPlacementKindIdentifier(false), GetPlacementKindObject(false));
+
+
+    // }
+    // factory->add_type_object("service", GetserviceIdentifier(true), GetserviceObject(true));
+    // factory->add_type_object("service", GetserviceIdentifier(false), GetserviceObject(false));
+
+    // factory->add_type_object("oneway", GetonewayIdentifier(true), GetonewayObject(true));
+    // factory->add_type_object("oneway", GetonewayIdentifier(false), GetonewayObject(false));
+
+    // factory->add_type_object("ami", GetamiIdentifier(true), GetamiObject(true));
+    // factory->add_type_object("ami", GetamiIdentifier(false), GetamiObject(false));
+
+    // factory->add_type_object("non_serialized", Getnon_serializedIdentifier(true), Getnon_serializedObject(true));
+    // factory->add_type_object("non_serialized", Getnon_serializedIdentifier(false), Getnon_serializedObject(false));
 
 }
 

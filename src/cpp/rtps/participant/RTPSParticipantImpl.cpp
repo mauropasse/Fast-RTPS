@@ -132,7 +132,7 @@ RTPSParticipantImpl::RTPSParticipantImpl(
         SharedMemTransportDescriptor shm_transport;
         // We assume (Linux) UDP doubles the user socket buffer size in kernel, so
         // the equivalent segment size in SHM would be socket buffer size x 2
-        auto segment_size_udp_equivalent = 
+        auto segment_size_udp_equivalent =
             std::max(m_att.sendSocketBufferSize, m_att.listenSocketBufferSize) * 2;
         shm_transport.segment_size(segment_size_udp_equivalent);
         // Use same default max_message_size on both UDP and SHM
@@ -312,7 +312,7 @@ RTPSParticipantImpl::RTPSParticipantImpl(
     }
 #endif
 
-    if (is_intraprocess_only())
+    //if (is_intraprocess_only())
     {
         m_att.builtin.metatrafficUnicastLocatorList.clear();
         m_att.defaultUnicastLocatorList.clear();
@@ -336,7 +336,7 @@ RTPSParticipantImpl::RTPSParticipantImpl(
 
     // Create buffer pool
     send_buffers_.reset(new SendBuffersManager(num_send_buffers, allow_growing_buffers));
-    send_buffers_->init(this);
+    //send_buffers_->init(this);
 
 #if HAVE_SECURITY
     if (m_is_security_active)
@@ -1435,7 +1435,7 @@ bool RTPSParticipantImpl::did_mutation_took_place_on_meta(
     std::list<Locator_t> unicast_real_locators;
     LocatorListConstIterator it = UnicastLocatorList.begin(), old_it;
     LocatorList_t locals;
- 
+
     do
     {
         // copy ordinary locators till the first ANY
@@ -1478,7 +1478,7 @@ bool RTPSParticipantImpl::did_mutation_took_place_on_meta(
     {
         typedef std::vector<std::shared_ptr<fastdds::rtps::TransportDescriptorInterface>> Transports;
 
-        ResetLogical(const Transports& tp) 
+        ResetLogical(const Transports& tp)
             : Transports_(tp)
             , tcp4(nullptr)
             , tcp6(nullptr)
