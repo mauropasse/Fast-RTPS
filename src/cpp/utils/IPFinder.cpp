@@ -110,7 +110,7 @@ bool IPFinder::getIPs(std::vector<info_IP>* vec_name, bool return_loopback)
                     }
                     else if (info.type == IP6)
                     {
-                        parseIP6(info);
+                        //parseIP6(info);
                     }
 
                     if(return_loopback || (info.type != IP6_LOCAL && info.type != IP4_LOCAL))
@@ -136,59 +136,59 @@ bool IPFinder::getIPs(std::vector<info_IP>* vec_name, bool return_loopback)
     char host[NI_MAXHOST];
 
     // TODO arm64 doesn't seem to support getifaddrs
-    if (getifaddrs(&ifaddr) == -1) {
-        perror("getifaddrs");
-        exit(EXIT_FAILURE);
-    }
+    // if (getifaddrs(&ifaddr) == -1) {
+    //     perror("getifaddrs");
+    //     exit(EXIT_FAILURE);
+    // }
 
-    for (ifa = ifaddr; ifa != NULL; ifa = ifa->ifa_next)
-    {
-        if (ifa->ifa_addr == NULL || (ifa->ifa_flags & IFF_RUNNING) == 0)
-            continue;
+    // for (ifa = ifaddr; ifa != NULL; ifa = ifa->ifa_next)
+    // {
+    //     if (ifa->ifa_addr == NULL || (ifa->ifa_flags & IFF_RUNNING) == 0)
+    //         continue;
 
-        family = ifa->ifa_addr->sa_family;
+    //     family = ifa->ifa_addr->sa_family;
 
-        if (family == AF_INET)
-        {
-            s = getnameinfo(ifa->ifa_addr, sizeof(struct sockaddr_in),
-                    host, NI_MAXHOST, NULL, 0, NI_NUMERICHOST);
-            if (s != 0) {
-                printf("getnameinfo() failed: %s\n", gai_strerror(s));
-                freeifaddrs(ifaddr);
-                exit(EXIT_FAILURE);
-            }
-            info_IP info;
-            info.type = IP4;
-            info.name = std::string(host);
-            info.dev = std::string(ifa->ifa_name);
-            parseIP4(info);
+    //     if (family == AF_INET)
+    //     {
+    //         s = getnameinfo(ifa->ifa_addr, sizeof(struct sockaddr_in),
+    //                 host, NI_MAXHOST, NULL, 0, NI_NUMERICHOST);
+    //         if (s != 0) {
+    //             printf("getnameinfo() failed: %s\n", gai_strerror(s));
+    //             freeifaddrs(ifaddr);
+    //             exit(EXIT_FAILURE);
+    //         }
+    //         info_IP info;
+    //         info.type = IP4;
+    //         info.name = std::string(host);
+    //         info.dev = std::string(ifa->ifa_name);
+    //         parseIP4(info);
 
-            if (return_loopback || info.type != IP4_LOCAL)
-                vec_name->push_back(info);
-        }
-        else if(family == AF_INET6)
-        {
-            s = getnameinfo(ifa->ifa_addr, sizeof(struct sockaddr_in6),
-                    host, NI_MAXHOST, NULL, 0, NI_NUMERICHOST);
-            if (s != 0) {
-                printf("getnameinfo() failed: %s\n", gai_strerror(s));
-                freeifaddrs(ifaddr);
-                exit(EXIT_FAILURE);
-            }
-            info_IP info;
-            info.type = IP6;
-            info.name = std::string(host);
-            info.dev = std::string(ifa->ifa_name);
-            if(parseIP6(info))
-            {
-                if (return_loopback || info.type != IP6_LOCAL)
-                    vec_name->push_back(info);
-            }
-            //printf("<Interface>: %s \t <Address> %s\n", ifa->ifa_name, host);
-        }
-    }
+    //         if (return_loopback || info.type != IP4_LOCAL)
+    //             vec_name->push_back(info);
+    //     }
+    //     else if(family == AF_INET6)
+    //     {
+    //         s = getnameinfo(ifa->ifa_addr, sizeof(struct sockaddr_in6),
+    //                 host, NI_MAXHOST, NULL, 0, NI_NUMERICHOST);
+    //         if (s != 0) {
+    //             printf("getnameinfo() failed: %s\n", gai_strerror(s));
+    //             freeifaddrs(ifaddr);
+    //             exit(EXIT_FAILURE);
+    //         }
+    //         info_IP info;
+    //         info.type = IP6;
+    //         info.name = std::string(host);
+    //         info.dev = std::string(ifa->ifa_name);
+    //         // if(parseIP6(info))
+    //         // {
+    //         //     if (return_loopback || info.type != IP6_LOCAL)
+    //         //         vec_name->push_back(info);
+    //         // }
+    //         //printf("<Interface>: %s \t <Address> %s\n", ifa->ifa_name, host);
+    //     }
+    // }
 
-    freeifaddrs(ifaddr);
+    // freeifaddrs(ifaddr);
     return true;
 }
 #endif

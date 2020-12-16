@@ -318,6 +318,7 @@ void EDPSimple::set_builtin_reader_history_attributes(
     attributes.initialReservedCaches = edp_reader_initial_reserved_caches;
     attributes.payloadMaxSize = mp_PDP->builtin_attributes().readerPayloadSize;
     attributes.memoryPolicy = mp_PDP->builtin_attributes().readerHistoryMemoryPolicy;
+    attributes.memoryPolicy = DYNAMIC_RESERVE_MEMORY_MODE;
 }
 
 void EDPSimple::set_builtin_writer_history_attributes(
@@ -326,6 +327,7 @@ void EDPSimple::set_builtin_writer_history_attributes(
     attributes.initialReservedCaches = edp_writer_initial_reserved_caches;
     attributes.payloadMaxSize = mp_PDP->builtin_attributes().writerPayloadSize;
     attributes.memoryPolicy = mp_PDP->builtin_attributes().writerHistoryMemoryPolicy;
+    attributes.memoryPolicy = DYNAMIC_RESERVE_MEMORY_MODE;
 }
 
 void EDPSimple::set_builtin_reader_attributes(

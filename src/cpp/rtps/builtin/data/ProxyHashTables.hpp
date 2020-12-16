@@ -164,21 +164,24 @@ private:
 
 } // namespace detail
 
+template <typename T>
+struct unordered_map_node_size : std::integral_constant<std::size_t, 48> {};
+
 template<class Proxy>
 class ProxyHashTable
     : protected detail::binary_node_segregator<
-        foonathan::memory::unordered_map_node_size<std::pair<const EntityId_t, Proxy*>>::value>
+        unordered_map_node_size<std::pair<const EntityId_t, Proxy*> >::value>
     , public foonathan::memory::unordered_map<
         EntityId_t,
         Proxy*,
         detail::binary_node_segregator<
-            foonathan::memory::unordered_map_node_size<std::pair<const EntityId_t, Proxy*>>::value>
+            unordered_map_node_size<std::pair<const EntityId_t, Proxy*> >::value>
         >
 {
 public:
 
     using allocator_type = detail::binary_node_segregator<
-        foonathan::memory::unordered_map_node_size<std::pair<const EntityId_t, Proxy*>>::value>;
+        unordered_map_node_size<std::pair<const EntityId_t, Proxy*> >::value>;
     using base_class = foonathan::memory::unordered_map<EntityId_t, Proxy*, allocator_type>;
 
     explicit ProxyHashTable(

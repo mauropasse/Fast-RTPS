@@ -259,11 +259,11 @@ option(SQLITE3_SUPPORT "Activate SQLITE3 support" ON)
 ###############################################################################
 # SHM as Default transport
 ###############################################################################
-option(SHM_TRANSPORT_DEFAULT "Adds SHM transport to the default transports" ON)
+option(SHM_TRANSPORT_DEFAULT "Adds SHM transport to the default transports" OFF)
 
 
 ###############################################################################
-# Tools default setup 
+# Tools default setup
 ###############################################################################
 option(COMPILE_TOOLS "Build tools" ON)
 
@@ -297,7 +297,7 @@ if(COMPILE_EXAMPLES)
 endif()
 
 ###############################################################################
-# Tools 
+# Tools
 ###############################################################################
 
 if(COMPILE_TOOLS)
@@ -445,10 +445,10 @@ if(EPROSIMA_INSTALLER)
 endif()
 
 if(INSTALL_TOOLS)
-  # Install tools 
+  # Install tools
   install(DIRECTORY ${PROJECT_SOURCE_DIR}/tools
       DESTINATION tools/
-      COMPONENT tools 
+      COMPONENT tools
       PATTERN "tools/CMakeLists.txt" EXCLUDE
       )
 

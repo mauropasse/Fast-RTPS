@@ -72,7 +72,7 @@ class SubscriberAttributes
 
         SubscriberAttributes()
             : expectsInlineQos(false)
-            , historyMemoryPolicy(rtps::PREALLOCATED_MEMORY_MODE)
+            , historyMemoryPolicy(rtps::DYNAMIC_RESERVE_MEMORY_MODE)
             , m_userDefinedID(-1)
             , m_entityID(-1)
         {}

@@ -2634,7 +2634,7 @@ public:
     RTPS_DllAPI RTPSEndpointQos()
         : user_defined_id(-1)
         , entity_id(-1)
-        , history_memory_policy(fastrtps::rtps::PREALLOCATED_MEMORY_MODE)
+        , history_memory_policy(fastrtps::rtps::DYNAMIC_RESERVE_MEMORY_MODE)
     {
     }
 

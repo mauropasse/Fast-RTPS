@@ -239,7 +239,7 @@ bool NetworkFactory::getDefaultMetatrafficMulticastLocators(
 
     for (auto& transport : mRegisteredTransports)
     {
-        // For better fault-tolerance reasons, SHM multicast metatraffic is avoided if it is already provided 
+        // For better fault-tolerance reasons, SHM multicast metatraffic is avoided if it is already provided
         // by another transport
         if (transport->kind() != LOCATOR_KIND_SHM)
         {
